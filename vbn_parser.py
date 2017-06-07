@@ -1,5 +1,6 @@
-# parse a VBN Forskningsportal RSS feed and returns a graph with nodes corresponding to researchers and edges
-# corresponding to collaborations to papers.
+""" parse a VBN Forskningsportal RSS feed and returns a graph with nodes corresponding to researchers and edges
+    corresponding to collaborations to papers.
+"""
 
 import feedparser
 import re
@@ -10,7 +11,8 @@ G=nx.Graph()
 people = list()
 
 # Read the XML file imported from VBN
-vbn_link = 'http://vbn.aau.dk/en/organisations/massm2m(85af23ac-46dd-4e3a-95af-a3a5e68087ce)/publications.rss'
+# vbn_link = 'http://vbn.aau.dk/en/organisations/massm2m(85af23ac-46dd-4e3a-95af-a3a5e68087ce)/publications.rss'
+vbn_link = 'http://vbn.aau.dk/da/organisations/antennas-propagation-and-radio-networking(c2c38bb3-3d28-4b2c-8bc4-949211d2d486)/publications.rss?altordering=publicationOrderByPublicationYearThenCreated&pageSize=500'
 d = feedparser.parse(vbn_link)
 
 for entry in d['entries']:
@@ -26,7 +28,11 @@ for entry in d['entries']:
     idxs = [people.index(person.string) for person in paper]
 
     # add new entries to the graph
-    G.add_nodes_from(idxs)
+    for idx in idxs:
+        # find the name and add it as node attribute
+        n = re.search(r'/persons/([^(]+)', people[idx]).group(1)
+        G.add_node(idx, name=n)
+
     for i_t in idxs:
         for i_r in idxs:
             if i_t < i_r:
@@ -38,5 +44,8 @@ for item in people:
     labels_file.write("%s\n" % item)
 
 # visualize the graph
-nx.draw(G, with_labels=True)
+labels = nx.get_node_attributes(G, 'name')
+nx.draw(G, labels=labels)
+
 plt.show()
+nx.write_graphml(G,"test1.graphml")

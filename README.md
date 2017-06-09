@@ -13,4 +13,4 @@ pip install python-louvain
 
 The purpose of this project is to analyze the Aalborg University social network based on the collaborations among researchers. The collaborations can be downloaded by VBN website, that is open access. The collaboration graph is saved in a .graphml file.
 
-We can open the .graphml file and perform some basic analysis, such as the community detection done in vbn_community_detection.py
+As shown in vbn_community_detection.py, we can open the .graphml file and perform some basic analysis, such as the community detection done.

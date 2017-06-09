@@ -11,7 +11,6 @@ G=nx.Graph()
 people = list()
 
 # Read the XML file imported from VBN
-# vbn_link = 'http://vbn.aau.dk/en/organisations/massm2m(85af23ac-46dd-4e3a-95af-a3a5e68087ce)/publications.rss'
 vbn_link = 'http://vbn.aau.dk/da/organisations/antennas-propagation-and-radio-networking(c2c38bb3-3d28-4b2c-8bc4-949211d2d486)/publications.rss?altordering=publicationOrderByPublicationYearThenCreated&pageSize=500'
 d = feedparser.parse(vbn_link)
 
